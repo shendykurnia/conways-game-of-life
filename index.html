@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Conway's Game of Life</title>
+</head>
+<body>
+    <div id='canvas'></div>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="universe.js"></script>
+    <script type="text/javascript" src="universe-ui.js"></script>
+    <script type="text/javascript">
+    var seed_width = 50;
+    var seed_height = 50;
+    var seed_probability = .2;
+    var seed = [];
+    for (var i = 0; i < seed_width; i++) {
+        for (var j = 0; j < seed_height; j++) {
+            if (Math.random() > seed_probability) {
+                continue;
+            }
+            seed.push([i, j]);
+        }
+    }
+    // seed = [
+    //     [1, 2],
+    //     [2, 2],
+    //     [3, 2],
+    // ];
+
+    var universe = new TwoDimensionUniverse(seed);
+    var ui = new TwoDimensionUi(universe, $('#canvas'), {
+        dimension_px: 400,
+        dimension_num_boxes: 50
+    });
+
+    setInterval(function() {
+        var updates = universe.tick();
+        ui.update(updates);
+    }, 1000);
+    </script>
+</body>
+</html>
